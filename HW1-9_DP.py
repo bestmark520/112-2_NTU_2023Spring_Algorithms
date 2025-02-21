@@ -4,12 +4,12 @@ def longest_palindromic_substring_DP(s: str) -> int:
     dp = [[0] * n for _ in range(n)]
     max_length = 0
 
-    # 初始化长度为1的回文子串
+    # 初始化表格
     for i in range(n):
         dp[i][i] = 1
         max_length = 1
 
-    # 填充动态规划表
+    # 填寫動態表格
     for l in range(2, n + 1):
         for i in range(n - l + 1):
             j = i + l - 1
