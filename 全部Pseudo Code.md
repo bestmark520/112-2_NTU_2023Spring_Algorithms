@@ -1,5 +1,7 @@
-#ch12_BSF
-
+# ch12_BSF
+- 簡介：把u拿出來，所有u的下一個都是v，那v的距離就是u+1，v的前一個是u，此時u的周遭都灰色了，所以u變黑色
+- 時間複雜度：O(|V| +|E|)
+```
 # s是起點
 # 初始化
 for each u ∈ V - {s}
@@ -16,14 +18,13 @@ while Q ≠ ∅
             ENQUEUE(Q,v)  # 將v加入隊列
 
     u.color = BLACK  # 將u的顏色設為黑色，表示u已經被完全探索
+```
 
-#簡介：把u拿出來，所有u的下一個都是v，那v的距離就是u+1，v的前一個是u，此時u的周遭都灰色了，所以u變黑色
-#時間複雜度：O(|V| +|E|)
-
-===
-
-#ch12_DSF
-
+# ch12_DSF
+- 迴圈內再一個跟自己一樣的迴圈，藉此達到走路紀錄time-mark的效果
+- 簡介：從起點u開始走，紀錄每個點在第幾步走到，直到cycle再走回頭路回起點u
+- 時間複雜度：O(|V| +|E|)
+```
 #初始化
 DFS(G = (V, E))
 for each v ∈ V  # 對圖中的每個節點v
@@ -50,14 +51,12 @@ time = time + 1  # 遞增時間計數器
 
 u.f = time  # 記錄節點u的完成時間 #終點
 u.color = BLACK  # 將節點u標記為黑色，表示訪問完成
+```
 
-#迴圈內再一個跟自己一樣的迴圈，藉此達到走路紀錄time-mark的效果
-
-#簡介：從起點u開始走，紀錄每個點在第幾步走到，直到cycle再走回頭路回起點u
-#時間複雜度：O(|V| +|E|)
-
-#ch13_Disjoint Set
-
+# ch13_Disjoint Set
+- 簡介：把同一個set的字串連在一起
+- 時間複雜度：O(m乘以a(n))
+```
 # 創建單元素集合
 Make-Set(x)
 x.p = x  # 初始化節點x的父節點為其自身
@@ -81,12 +80,13 @@ return x.p  # 返回根節點
 # 合併兩個集合
 Union(x, y)
 Link(Find-Set(x), Find-Set(y))  # 先找到x和y的根節點，再合併這兩個集合
+```
 
-#簡介：把同一個set的字串連在一起
-#時間複雜度：O(m乘以a(n))
-
-#ch14_Prim
-
+# ch14_Prim
+- 假設有輔助函數Insert, Extract-Min, Decrease-Key來操作優先隊列Q
+- 簡介：由起點r出發，每次都選權重最少的邊走，不能連成cycle
+- 時間複雜度：O(|V|log|V| +|E|)
+```
 # r是起點
 
 MST-Prim(G = (V, E, w), r)
@@ -106,16 +106,13 @@ MST-Prim(G = (V, E, w), r)
 13.            v.key = w(u, v)  # 更新v的鍵值為邊(u, v)的權重
 14.            Decrease-Key(Q, v, w(u, v))  # 調整Q中v的位置，以反映其鍵值的變化
 15. return A = {(v.π, v) | v ∈ V \ {r}}  # 返回最小生成樹的邊集合A
+```
 
-# 假設有輔助函數Insert, Extract-Min, Decrease-Key來操作優先隊列Q
-
-#簡介：由起點r出發，每次都選權重最少的邊走，不能連成cycle
-#時間複雜度：O(|V|log|V| +|E|)
-
-===
-
-#ch14_Kruskal
-
+# ch14_Kruskal
+- 假設有輔助函數Make-Set, Find-Set, Union來操作不相交集合
+- 簡介：沒有起點，從最少的權重開始選，不能連成cycle
+- 時間複雜度：O(|E|log|V|)
+```
 MST-Kruskal(G = (V, E, w))
 1. A = ∅  # 初始化最小生成樹的邊集合A為空
 2. for each v ∈ V  # 對於圖中的每個節點v
@@ -128,14 +125,10 @@ MST-Kruskal(G = (V, E, w))
 8.         A = A ∪ {(u, v)}  # 將邊(u, v)加入最小生成樹的邊集合A
 9.         Union(u, v)  # 合併u和v所在的集合
 10. return A  # 返回最小生成樹的邊集合A
+```
 
-# 假設有輔助函數Make-Set, Find-Set, Union來操作不相交集合
-
-#簡介：沒有起點，從最少的權重開始選，不能連成cycle
-#時間複雜度：O(|E|log|V|)
-
-#ch15_two operation
-
+# ch15_two operation
+```
 # 初始化操作
 Initialization(G, s)
 1. for each v ∈ V  # 對於圖中的每個節點v
@@ -148,11 +141,14 @@ Relax(u, v, w)
 1. if v.d > u.d + w(u, v)  # 如果從u經由邊(u, v)到v的距離小於v當前的距離
 2.     v.d = u.d + w(u, v)  # 更新v的距離為從u到v的距離
 3.     v.π = u  # 更新v的前驅節點為u
+```
 
-===
-
-#ch15_Bellman-Ford
-
+# ch15_Bellman-Ford
+- 假設 Initialization 和 Relax 函數已經定義
+- 比較：ch14最小生成樹不是起點到某點的最短距離，ch15的Single-Source是起點到所有點的最短距離
+- 簡介：由起點s出發，不斷relax更新最短距離，可以處理負數邊
+- 時間複雜度：O(|V||E|)
+```
 Bellman-Ford(G = (V, E, w), s)
 1. Initialization(G, s)  # 初始化圖G中的節點，將起點s的距離設置為0，其他節點的距離設置為無限大
 
@@ -165,17 +161,13 @@ Bellman-Ford(G = (V, E, w), s)
 7.         return False  # 返回False，表示圖中存在負權重環
 
 8. return True  # 返回True，表示沒有找到負權重環，所有最短路徑已計算完成
+```
 
-# 假設 Initialization 和 Relax 函數已經定義
-
-#比較：ch14最小生成樹不是起點到某點的最短距離，ch15的Single-Source是起點到所有點的最短距離
-#簡介：由起點s出發，不斷relax更新最短距離，可以處理負數邊
-#時間複雜度：O(|V||E|)
-
-===
-
-#ch15_有向無環圖(Directed Acyclic Graph, DAG)的最短路徑算法
-
+# ch15_有向無環圖(Directed Acyclic Graph, DAG)的最短路徑算法
+- 假設 Initialization 和 Relax 函數已經定義
+- 簡介：沒有cycle，線有方向，不斷更新topologically sort的最短距離
+- 時間複雜度：O(|V|+|E|)
+```
 DAG-Shortest-Path(G, s)
 1. Topologically sort the vertices of G.V  # 對圖G中的節點進行拓撲排序
 2. Initialization(G, s)  # 初始化操作，設置起點s的距離為0，其他節點的距離為無限大
@@ -183,16 +175,13 @@ DAG-Shortest-Path(G, s)
 3. for each vertex u taken from the topological sorted order  # 根據拓撲排序順序遍歷每個節點u
 4.     for each vertex v in Adj[u]  # 對於節點u的每個鄰接節點v
 5.         Relax(u, v, w)  # 執行鬆弛操作，更新節點v的距離和前驅節點，如果從u到v的距離更短
+```
 
-# 假設 Initialization 和 Relax 函數已經定義
-
-#簡介：沒有cycle，線有方向，不斷更新topologically sort的最短距離
-#時間複雜度：O(|V|+|E|)
-
-===
-
-#ch15_Dijkstra
-
+# ch15_Dijkstra
+- 假設 Initialization, Insert, Extract-Min, 和 Relax 函數已經定義
+- 簡介：1.可以是有向圖或無向圖 2.不能有負數權重邊 3.速度是最快的
+- 時間複雜度：O(|V|log|V| +|E|)
+```
 Dijkstra(G = (V, E, w), s)
 1. Initialization(G, s)  # 初始化操作，設置起點s的距離為0，其他節點的距離為無限大
 
@@ -207,8 +196,4 @@ Dijkstra(G = (V, E, w), s)
 
 8.     for each v in adj[u]  # 對於節點u的每個鄰接節點v
 9.         Relax(u, v, w)  # 執行鬆弛操作，更新節點v的距離和前驅節點，如果從u到v的距離更短
-
-# 假設 Initialization, Insert, Extract-Min, 和 Relax 函數已經定義
-
-#簡介：1.可以是有向圖或無向圖 2.不能有負數權重邊 3.速度是最快的
-#時間複雜度：O(|V|log|V| +|E|)
+```
