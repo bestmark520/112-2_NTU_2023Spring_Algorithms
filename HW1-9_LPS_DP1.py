@@ -1,5 +1,4 @@
-#找有幾個對稱字
-def longest_palindromic_substring_DP(s: str) -> int:
+def longest_palindromic_substring_DP(s):
     n = len(s)
     dp = [[0] * n for _ in range(n)]
     max_length = 0
@@ -22,6 +21,4 @@ def longest_palindromic_substring_DP(s: str) -> int:
 
     return max_length
 
-# 示例用法
-result = longest_palindromic_substring_DP("rotator")
-print(result)  # Output: 3
+print(longest_palindromic_substring_DP("rotator")) # Output: 7
