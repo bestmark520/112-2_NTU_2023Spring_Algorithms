@@ -48,5 +48,4 @@ def shortestCommonSupersequence(str1: str, str2: str) -> str:
 
     return res
 
-result = shortestCommonSupersequence("ATCGT", "TGACG")
-print(result)
+print(shortestCommonSupersequence("ATCGT", "TGACG"))
