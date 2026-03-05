@@ -4,7 +4,7 @@ PROCEDURE AnalyzeDynamicTable(expansion_factor, initial_size)
     table = AllocateTable(current_size)
 
     WHILE True:
-        operation = GetOperation() // 获取用户操作:扩展、收缩或退出
+        operation = GetOperation() // 獲得用戶操作：擴展、收縮、退出
 
         IF operation == "expand":
             new_size = current_size * expansion_factor
