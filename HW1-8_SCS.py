@@ -1,9 +1,9 @@
-def SCS(str1: str, str2: str) -> str:
-    # 生資導dp圖畫出格子
+def SCS(str1, str2):
+    # 初始化
     m, n = len(str1), len(str2)
     dp = [[""] * (n + 1) for _ in range(m + 1)]
 
-    # 填充dp數組，就是畫生資導DP圖
+    # 填充dp數組
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             #dp[i][j] = (dp[i - 1][j - 1] + str1[i - 1]) if str1[i - 1] == str2[j - 1] else max(dp[i - 1][j], dp[i][j - 1], key=len)
@@ -12,7 +12,7 @@ def SCS(str1: str, str2: str) -> str:
             else:
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1], key=len)
 
-    # 輸出SCS
+    # 輸出SCS # 起點是dp[0][0]
     i, j = 0, 0
     res = ""
     for c in dp[m][n]:
@@ -28,6 +28,4 @@ def SCS(str1: str, str2: str) -> str:
 
     return res + str1[i:] + str2[j:]
 
-# 示例用法
-result = SCS("ATCGT", "TGACG")
-print(result)  # Output: "TGATCGT"
+print(SCS("ATCGT", "TGACG")) # Output: "TGATCGT"
